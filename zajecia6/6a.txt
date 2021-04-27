@@ -1,0 +1,25 @@
+@@@@ 1
+
+Zależności dla zamowienia:
+	id_produktu -> nazwa_produktu, cena_produktu, VAT
+	nazwa_produktu -> id_produktu, cena_produktu, VAT
+	id_klienta -> nazwa_klienta, data_zamownienia, ilosc, suma_brutto, suma_netto
+	nazwa_klienta -> id_klienta, data_zamownienia, ilosc, suma_brutto, suma_netto
+
+Klucze kandydujące:
+	id_klienta - id_produktu - data_zamowienia
+	id_klienta - nazwa_produktu - data_zamowienia
+	nazwa_produktu - nazwa_klienta - data_zamowienia
+	id_produktu - nazwa_klienta - data_zamowienia
+
+@@@@ 2
+
+Zależności dla pomieszczenia:
+	id_pomieszczenia -> numer_pomieszczenia, powierzchnia, liczba_okien, liczba_drzwi
+	id_budynku -> ulica, miast, kod_pocztowy
+	miasto -> kod_pocztowy
+	kod_pocztowy -> miasto
+
+Klucze kandydujące:
+	id_budynku, id_pomieszczenia
+	id_budynku, id_pomieszczenia, numer_pomieszczenia

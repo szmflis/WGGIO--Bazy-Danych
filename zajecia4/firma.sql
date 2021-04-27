@@ -150,16 +150,13 @@ SELECT (ksiegowosc.pracownicy.id_pracownika, ksiegowosc.pensje.kwota_brutto)
     INNER JOIN ksiegowosc.pensje on ksiegowosc.pensje.id_pensji = ksiegowosc.wynagrodzenie.id_pensji
     WHERE ksiegowosc.pensje.kwota_brutto > 1000;
 
--- c poprawic
+-- c
 SELECT (ksiegowosc.pracownicy.id_pracownika, ksiegowosc.pensje.kwota_brutto)
     FROM ksiegowosc.pracownicy
     INNER JOIN ksiegowosc.wynagrodzenie on ksiegowosc.wynagrodzenie.id_pracownika = ksiegowosc.pracownicy.id_pracownika
     INNER JOIN ksiegowosc.pensje on ksiegowosc.pensje.id_pensji = ksiegowosc.wynagrodzenie.id_pensji
-    INNER JOIN ksiegowosc.premie on ksiegowosc.premie.id_premii = ksiegowosc.wynagrodzenie.id_premii
-    WHERE NOT EXISTS(
-        SELECT ksiegowosc.pensje.id_premii, ksiegowosc.wynagrodzenie.id_premii
-            FROM ksiegowosc.wynagrodzenie INNER JOIN ksiegowosc.pensje p on p.id_pensji = ksiegowosc.wynagrodzenie.id_pensji
-    );
+    WHERE ksiegowosc.wynagrodzenie.id_premii IS NULL
+    AND ksiegowosc.premie.kwota > 2000;
 
 -- d
 SELECT (imie) FROM ksiegowosc.pracownicy
@@ -186,6 +183,13 @@ SELECT (imie, nazwisko, kwota_brutto)
     WHERE ksiegowosc.pensje.kwota_brutto > 1500 AND ksiegowosc.pensje.kwota_brutto < 3000;
 
 -- h
+SELECT (imie, nazwisko, ksiegowosc.godziny.liczba_godzin) - 160 AS liczba_nadgodzin, ksiegowosc.premie.kwota
+FROM firma.ksiegowosc.pracownicy
+JOIN ksiegowosc.godziny ON ksiegowosc.godziny.id_pracownika = ksiegowosc.pracownicy.id_pracownika
+JOIN ksiegowosc.wynagrodzenie ON pracownicy.id_pracownika = ksiegowosc.wynagrodzenie.id_pracownika
+JOIN ksiegowosc.premie ON premie.id_premii = ksiegowosc.wynagrodzenie.id_premii
+WHERE ksiegowosc.godziny.liczba_godzin > 160 AND ksiegowosc.premie.kwota IS NULL;
+
 
 -- i
 SELECT (kwota_brutto, imie, nazwisko)
@@ -235,3 +239,8 @@ FROM ksiegowosc.pensje INNER JOIN ksiegowosc.premie p on p.id_premii = ksiegowos
 GROUP BY stanowisko;
 
 -- h
+DELETE FROM firma.ksiegowosc.pracownicy
+USING firma.ksiegowosc.wynagrodzenie, ksiegowosc.pensje
+WHERE firma.ksiegowosc.pracownicy.id_pracownika = ksiegowosc.wynagrodzenie.id_pracownika
+AND firma.ksiegowosc.pensje.id_pensji = ksiegowosc.wynagrodzenie.id_pensji
+AND firma.ksiegowosc.pensje.kwota_netto < '3000';
