@@ -21,10 +21,10 @@ begin
     end if;
 
     select averagerate
-    into rate
-    from sales.currencyrate r
-    where r.tocurrencycode = selected_cur
-      and r.currencyratedate = date;
+        into rate
+        from sales.currencyrate r
+        where r.tocurrencycode = selected_cur
+          and r.currencyratedate = date;
 
     if (rate is null) then
         raise exception 'no rate found';
@@ -42,6 +42,6 @@ $$;
 
 call currency_calc('USD', 'EUR', 10, '2012-06-29 00:00:00');
 call currency_calc('USD', 'USD', 10, '2077-01-01 00:00:00');
-call currency_calc('EUR', 'USD', 10, '2012-06-29 00:00:00');
-call currency_calc('123', 'XXX', 10, '2012-06-29 00:00:00');
-call currency_calc('123', 'USD', 10, '2012-06-29 00:00:00');
+call currency_calc('EUR', 'USD', 10, '2012-06-23 00:00:00');
+call currency_calc('123', 'XXX', 10, '2012-03-13 00:00:00');
+call currency_calc('123', 'USD', 10, '2012-04-21 00:00:00');

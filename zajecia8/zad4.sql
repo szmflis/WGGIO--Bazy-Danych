@@ -1,3 +1,4 @@
+-- 4.Utwórz funkcję, która zwraca numer karty kredytowej dla konkretnego zamówienia.
 
 DROP FUNCTION get_card_num_from_order(orderid int);
 CREATE OR REPLACE FUNCTION get_card_num_from_order(orderid int)
