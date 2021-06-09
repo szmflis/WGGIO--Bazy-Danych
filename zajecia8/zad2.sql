@@ -1,4 +1,5 @@
 DROP FUNCTION get_due_of_order(orderid int);
+
 create or replace function get_due_of_order(orderid int)
 returns DATE
 language plpgsql
